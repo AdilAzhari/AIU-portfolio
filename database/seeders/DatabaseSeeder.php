@@ -16,15 +16,17 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
+        // Seed roles first
+        $this->call(RoleSeeder::class);
 
+        // Get the admin role
+        $adminRole = \App\Models\Role::where('name', RoleEnum::ADMIN->value)->first();
+
+        // Create test user with admin role
         User::factory()->create([
             'name' => 'Test User',
             'email' => 'test@example.com',
-            'role' =>  RoleEnum::ADMIN->value,
+            'role_id' => $adminRole->id,
         ]);
-
-        $this->call(RoleSeeder::class);
-
     }
 }

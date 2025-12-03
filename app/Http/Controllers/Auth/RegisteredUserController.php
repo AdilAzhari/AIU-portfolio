@@ -36,10 +36,16 @@ class RegisteredUserController extends Controller
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
+        // Get or create student role
+        $studentRole = \App\Models\Role::firstOrCreate(
+            ['name' => \App\Enums\RoleEnum::STUDENT->value]
+        );
+
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'role_id' => $studentRole->id,
         ]);
 
         event(new Registered($user));
