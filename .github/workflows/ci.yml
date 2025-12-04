@@ -19,6 +19,12 @@ jobs:
       - name: Install Composer deps
         run: composer install --prefer-dist --no-interaction
 
+      - name: Copy .env
+        run: cp .env.example .env
+
+      - name: Generate app key
+        run: php artisan key:generate
+
       - name: Run Pint
         run: vendor/bin/pint --test
 
