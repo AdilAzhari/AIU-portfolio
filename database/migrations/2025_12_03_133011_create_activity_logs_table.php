@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('action');                     // e.g. "credential_issued"
             $table->string('subject_type')->nullable();  // Model class
             $table->unsignedBigInteger('subject_id')->nullable();
-            $table->json('meta')->nullable();   
+            $table->json('meta')->nullable();
             $table->timestamps();
         });
     }

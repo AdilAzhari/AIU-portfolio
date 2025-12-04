@@ -22,7 +22,7 @@ class CredentialController extends Controller
             'issuer_id' => auth()->id(),
             'evidence_id' => $request->evidence_id,
             'title' => strip_tags($request->title),
-            'description' => strip_tags($request->description)
+            'description' => strip_tags($request->description),
         ]);
 
         $credential->log('credential_created', [
@@ -34,7 +34,6 @@ class CredentialController extends Controller
 
         $credential->revoke($request->reason);
         $credential->log('credential_revoked', ['reason' => $request->reason]);
-
 
         return back()->with('status', 'Credential created and pending approval.');
     }

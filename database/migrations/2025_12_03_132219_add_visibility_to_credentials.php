@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::table('credentials', function (Blueprint $table) {
             $table->enum('visibility', ['private', 'public'])->default('public');
-         });
+        });
     }
 
     /**

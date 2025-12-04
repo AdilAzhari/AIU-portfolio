@@ -10,7 +10,7 @@ class AdminController extends Controller
 {
     public function dashboard(): Response
     {
-        
+
         $stats = cache()->remember('admin_stats', 60, function () {
             return [
                 'credentials' => Credential::count(),

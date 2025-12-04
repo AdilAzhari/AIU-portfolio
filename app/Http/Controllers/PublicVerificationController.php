@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Credential;
 use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 
 class PublicVerificationController extends Controller
@@ -56,7 +55,6 @@ class PublicVerificationController extends Controller
             ],
         ]);
 
-
         return Inertia::render('Verify/Show', [
             'credential' => [
                 'id' => $credential->id,
@@ -64,8 +62,8 @@ class PublicVerificationController extends Controller
                 'description' => $credential->description,
                 'status' => $credential->status,
                 'revocation_reason' => $credential->revocation_reason,
-                'student' => $credential->student->only('id','name'),
-                'issuer' => $credential->issuer->only('id','name'),
+                'student' => $credential->student->only('id', 'name'),
+                'issuer' => $credential->issuer->only('id', 'name'),
                 'created_at' => $credential->created_at,
             ],
             'verification' => $verification,

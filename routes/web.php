@@ -6,9 +6,8 @@ use App\Http\Controllers\EvidenceController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
-use SimpleSoftwareIO\QrCode\Facades\QrCode;
-
 use Inertia\Inertia;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -57,7 +56,7 @@ Route::middleware(['auth', 'verified'])->group(function (): void {
     });
 });
 
-Route::middleware(['auth','throttle:10,1'])->group(function (): void {
+Route::middleware(['auth', 'throttle:10,1'])->group(function (): void {
     Route::post('/evidence', [EvidenceController::class, 'store'])->name('evidence.store');
 });
 
