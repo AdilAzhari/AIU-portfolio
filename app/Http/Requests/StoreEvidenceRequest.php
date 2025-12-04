@@ -22,7 +22,7 @@ class StoreEvidenceRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'file' => ['required', 'file', 'max:51200'], // max 50MB
+            'file' => ['required', 'file', 'max:51200','mimetypes:application/pdf,image/png,image/jpeg'], // max 50MB
             'title' => ['nullable', 'string', 'max:255'],
             'description' => ['nullable', 'string', 'max:2000'],
             'visibility' => ['nullable', 'in:private,public'],

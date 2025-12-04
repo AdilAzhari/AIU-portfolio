@@ -21,9 +21,20 @@ class CredentialController extends Controller
             'student_id' => $request->student_id,
             'issuer_id' => auth()->id(),
             'evidence_id' => $request->evidence_id,
-            'title' => $request->title,
-            'description' => $request->description,
+            'title' => strip_tags($request->title),
+            'description' => strip_tags($request->description)
         ]);
+
+        $credential->log('credential_created', [
+            'student_id' => $credential->student_id,
+        ]);
+
+        $credential->markIssued();
+        $credential->log('credential_issued');
+
+        $credential->revoke($request->reason);
+        $credential->log('credential_revoked', ['reason' => $request->reason]);
+
 
         return back()->with('status', 'Credential created and pending approval.');
     }

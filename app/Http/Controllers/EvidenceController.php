@@ -42,6 +42,10 @@ class EvidenceController extends Controller
             'status' => 'uploaded',
         ]);
 
+        $evidence->log('evidence_uploaded', [
+            'sha256' => $evidence->sha256,
+        ]);
+
         // dispatch job (async) to pin to IPFS
         PinEvidenceJob::dispatch($evidence);
 

@@ -17,6 +17,8 @@ class PinEvidenceJob implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     public Evidence $evidence;
+    public $tries = 5;
+    public $backoff = 30; 
 
     public function __construct(Evidence $evidence)
     {
