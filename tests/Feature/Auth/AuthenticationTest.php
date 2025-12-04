@@ -9,7 +9,9 @@ test('login screen can be rendered', function (): void {
 });
 
 test('users can authenticate using the login screen', function (): void {
-    $user = User::factory()->create();
+    $user = User::factory()->create([
+        'role_id' => \App\Models\Role::factory()->student(),
+    ]);
 
     $response = $this->post('/login', [
         'email' => $user->email,
@@ -17,7 +19,7 @@ test('users can authenticate using the login screen', function (): void {
     ]);
 
     $this->assertAuthenticated();
-    $response->assertRedirect(route('dashboard', absolute: false));
+    $response->assertRedirect('/student/dashboard');
 });
 
 test('users can not authenticate with invalid password', function (): void {

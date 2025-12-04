@@ -16,7 +16,7 @@ return new class extends Migration
 
             $table->foreignId('student_id')->constrained('users')->cascadeOnDelete();
             $table->foreignId('issuer_id')->constrained('users')->cascadeOnDelete();
-            $table->foreignId('evidence_id')->nullable()->constrained()->nullOnDelete();
+            $table->foreignId('evidence_id')->nullable()->constrained('evidences')->nullOnDelete();
 
             // Credential core metadata
             $table->string('title');

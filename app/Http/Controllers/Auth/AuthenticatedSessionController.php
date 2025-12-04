@@ -34,7 +34,7 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        return match (auth()->user()->role) {
+        return match (auth()->user()->role->name) {
             RoleEnum::ADMIN => redirect('/admin/dashboard'),
             RoleEnum::ISSUER => redirect('/issuer/dashboard'),
             RoleEnum::STUDENT => redirect('/student/dashboard'),
