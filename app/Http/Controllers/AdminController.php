@@ -11,13 +11,11 @@ class AdminController extends Controller
     public function dashboard(): Response
     {
 
-        $stats = cache()->remember('admin_stats', 60, function () {
-            return [
-                'credentials' => Credential::count(),
-                'issued' => Credential::where('status', 'issued')->count(),
-                'revoked' => Credential::where('status', 'revoked')->count(),
-            ];
-        });
+        $stats = cache()->remember('admin_stats', 60, fn () => [
+            'credentials' => Credential::count(),
+            'issued' => Credential::where('status', 'issued')->count(),
+            'revoked' => Credential::where('status', 'revoked')->count(),
+        ]);
 
         return Inertia::render('Admin/Dashboard');
     }

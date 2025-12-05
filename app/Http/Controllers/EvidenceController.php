@@ -62,7 +62,7 @@ class EvidenceController extends Controller
             } else {
                 $evidence->markFailed();
             }
-        } catch (\Throwable $e) {
+        } catch (\Throwable) {
             // IPFS node offline or unreachable
             $evidence->markFailed();
         }

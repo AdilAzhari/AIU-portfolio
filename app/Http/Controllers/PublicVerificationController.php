@@ -39,7 +39,7 @@ class PublicVerificationController extends Controller
                     $remoteSha = hash('sha256', $res->body());
                     $verification['matches_sha'] = ($remoteSha === $evidence->sha256);
                 }
-            } catch (\Throwable $e) {
+            } catch (\Throwable) {
                 $verification['matches_sha'] = false;
             }
         }
