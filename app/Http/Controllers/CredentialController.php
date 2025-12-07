@@ -1,14 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers;
 
 use App\Models\Credential;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class CredentialController extends Controller
 {
     // Issuer: create credential for a student
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
         $request->validate([
             'student_id' => ['required', 'exists:users,id'],
@@ -17,7 +20,7 @@ class CredentialController extends Controller
             'evidence_id' => ['nullable', 'exists:evidences,id'],
         ]);
 
-        $credential = Credential::create([
+        $credential = Credential::query()->create([
             'student_id' => $request->student_id,
             'issuer_id' => auth()->id(),
             'evidence_id' => $request->evidence_id,
@@ -39,7 +42,7 @@ class CredentialController extends Controller
     }
 
     // Issuer: mark credential as "issued"
-    public function issue(Credential $credential)
+    public function issue(Credential $credential): RedirectResponse
     {
         // RBAC: only issuer of this credential OR admin
         if (auth()->id() !== $credential->issuer_id && ! auth()->user()->isRole('admin')) {
@@ -52,7 +55,7 @@ class CredentialController extends Controller
     }
 
     // Issuer: revoke credential
-    public function revoke(Request $request, Credential $credential)
+    public function revoke(Request $request, Credential $credential): RedirectResponse
     {
         if (auth()->id() !== $credential->issuer_id && ! auth()->user()->isRole('admin')) {
             abort(403, 'Unauthorized');

@@ -42,4 +42,4 @@ jobs:
       - name: Run Tests
         run: php artisan test
   deploy:
-  
+    runs-on: ubuntu-latest
