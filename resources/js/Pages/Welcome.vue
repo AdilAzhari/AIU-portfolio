@@ -1,5 +1,6 @@
 <script setup>
-import { Head, Link } from '@inertiajs/vue3';
+import { computed } from 'vue';
+import { Head, Link, usePage } from '@inertiajs/vue3';
 
 defineProps({
     canLogin: {
@@ -16,6 +17,14 @@ defineProps({
         type: String,
         required: true,
     },
+});
+
+const page = usePage();
+
+// Compute the dashboard route based on user role
+const dashboardRoute = computed(() => {
+    const roleName = page.props.auth?.user?.role?.name;
+    return roleName ? `${roleName}.dashboard` : 'login';
 });
 
 function handleImageError() {
@@ -57,7 +66,7 @@ function handleImageError() {
                     <nav v-if="canLogin" class="-mx-3 flex flex-1 justify-end">
                         <Link
                             v-if="$page.props.auth.user"
-                            :href="route('dashboard')"
+                            :href="route(dashboardRoute)"
                             class="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white"
                         >
                             Dashboard

@@ -37,7 +37,7 @@ class DashboardController extends Controller
                     'student_name' => $credential->student->name,
                     'status' => $credential->status,
                     'created_at' => $credential->created_at->format('M d, Y'),
-                    'issued_at' => $credential->anchored_at?->format('M d, Y'),
+                    'issued_at' => $credential->issued_at?->format('M d, Y'),
                 ];
             });
 

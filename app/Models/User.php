@@ -22,6 +22,7 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
+        'ethereum_address',
         'password',
         'role_id',
     ];
@@ -57,5 +58,17 @@ class User extends Authenticatable
     public function isRole(string $role): bool
     {
         return $this->role?->name === $role;
+    }
+
+    public function getDashboardRoute(): string
+    {
+        $roleName = $this->role?->name;
+        return match ($roleName) {
+            'admin' => 'admin.dashboard',
+            'student' => 'student.dashboard',
+            'issuer' => 'issuer.dashboard',
+            'verifier' => 'verifier.dashboard',
+            default => 'login',
+        };
     }
 }

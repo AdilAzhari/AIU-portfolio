@@ -13,10 +13,20 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
 */
 class ActivityLog extends Model
 {
-    protected $guarded = [];
+    protected $fillable = [
+        'actor_id',
+        'action',
+        'subject_type',
+        'subject_id',
+        'meta'
+    ];
 
     protected $casts = [
         'meta' => 'array',
+        'actor_id' => 'integer',
+        'subject_id' => 'integer',
+        'action' => 'string',
+        'subject_type' => 'string',
     ];
 
     public function actor(): BelongsTo

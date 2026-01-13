@@ -2,13 +2,16 @@
 
 declare(strict_types=1);
 
+use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CredentialController;
 use App\Http\Controllers\PublicVerificationController;
 use App\Http\Controllers\EvidenceController;
 use App\Http\Controllers\Issuer\DashboardController as IssuerDashboardController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\QrCodeController;
 use App\Http\Controllers\Student\DashboardController as StudentDashboardController;
+use App\Http\Controllers\Verifier\DashboardController as VerifierDashboardController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -37,7 +40,7 @@ Route::middleware('auth')->group(function () {
 Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::middleware('role:admin')->group(function () {
-        Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+        Route::get('/admin/dashboard', [AdminDashboardController::class, 'index'])->name('admin.dashboard');
         Route::get('/admin/logs', [AdminController::class, 'logs'])->name('admin.logs');
         Route::get('/admin/logs/export', [AdminController::class, 'exportLogs'])->name('admin.logs.export');
     });
@@ -51,13 +54,17 @@ Route::middleware(['auth', 'verified'])->group(function () {
     });
 
     Route::middleware('role:verifier')->group(function () {
-        Route::get('/verifier/dashboard', fn () => Inertia::render('Verifier/Dashboard'))->name('verifier.dashboard');
+        Route::get('/verifier/dashboard', [VerifierDashboardController::class, 'index'])->name('verifier.dashboard');
     });
 });
 
 Route::middleware(['auth', 'throttle:10,1'])->group(function (): void {
     Route::get('/evidence/create', [EvidenceController::class, 'create'])->name('evidence.create');
     Route::post('/evidence', [EvidenceController::class, 'store'])->name('evidence.store');
+});
+
+Route::middleware(['auth'])->group(function (): void {
+    Route::get('/credentials/{credential}/qr', [QrCodeController::class, 'generate'])->name('credentials.qr');
 });
 
 Route::middleware(['auth', 'role:issuer'])->group(function (): void {

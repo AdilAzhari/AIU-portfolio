@@ -12,7 +12,30 @@ class Credential extends Model
 {
     use LogsActivity;
 
-    protected $guarded = [];
+    protected $fillable = [
+        'student_id',
+        'issuer_id',
+        'evidence_id',
+        'title',
+        'description',
+        'status',
+        'revocation_reason',
+        'revoked_at',
+        'issued_at',
+        'cid',
+        'anchor_hash',
+        'anchored_at',
+    ];
+
+    protected $casts = [
+        'revocation_reason' => 'string',
+        'revoked_at' => 'datetime',
+        'issued_at' => 'datetime',
+        'anchor_hash' => 'string',
+        'anchored_at' => 'datetime',
+        'cid' => 'integer',
+        'status' => 'string',
+    ];
 
     public function student(): BelongsTo
     {
@@ -31,7 +54,10 @@ class Credential extends Model
 
     public function markIssued(): void
     {
-        $this->update(['status' => 'issued']);
+        $this->update([
+            'status' => 'issued',
+            'issued_at' => now(),
+        ]);
     }
 
     public function revoke(string $reason): void

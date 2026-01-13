@@ -12,8 +12,10 @@
         "laravel/framework": "^12.0",
         "laravel/sanctum": "^4.0",
         "laravel/tinker": "^2.10.1",
+        "nunomaduro/essentials": "^1.0",
         "simplesoftwareio/simple-qrcode": "^4.2",
-        "tightenco/ziggy": "^2.0"
+        "tightenco/ziggy": "^2.0",
+        "web3p/web3.php": "^0.3.2"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",

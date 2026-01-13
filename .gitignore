@@ -23,3 +23,10 @@
 Homestead.json
 Homestead.yaml
 Thumbs.db
+test-env.php
+docs/*
+.claude/
+.claude.md
+SEPOLIA_DEPLOYMENT.md
+SETUP_COMPLETE.md
+TESTING_GUIDE.md

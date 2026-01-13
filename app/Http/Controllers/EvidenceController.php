@@ -10,9 +10,16 @@ use App\Models\Evidence;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Inertia\Inertia;
+use Inertia\Response;
 
 class EvidenceController extends Controller
 {
+    public function create(): Response
+    {
+        return Inertia::render('Evidence/Upload');
+    }
+
     public function store(StoreEvidenceRequest $request): RedirectResponse
     {
         $file = $request->file('file');
@@ -50,24 +57,6 @@ class EvidenceController extends Controller
 
         // dispatch job (async) to pin to IPFS
         PinEvidenceJob::dispatch($evidence);
-
-        try {
-            $response = Http::attach(
-                'file',
-                file_get_contents($absolute),
-                $filename
-            )->post('http://127.0.0.1:5001/api/v0/add');
-
-            if ($response->ok() && isset($response['Hash'])) {
-                $cid = $response['Hash'];
-                $evidence->markPinned($cid);
-            } else {
-                $evidence->markFailed();
-            }
-        } catch (\Throwable) {
-            // IPFS node offline or unreachable
-            $evidence->markFailed();
-        }
 
         return back()->with('status', 'Evidence uploaded and queued for IPFS pinning.');
     }

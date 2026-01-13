@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\Credentialstatus;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -23,11 +24,7 @@ return new class extends Migration
             $table->text('description')->nullable();
 
             // Status flow
-            $table->enum('status', [
-                'pending',       // created but not approved
-                'issued',        // approved
-                'revoked',       // invalidated later
-            ])->default('pending')->index();
+            $table->enum('status', ['pending', 'issued', 'revoked'])->default('pending')->index();
 
             // Revocation information
             $table->text('revocation_reason')->nullable();

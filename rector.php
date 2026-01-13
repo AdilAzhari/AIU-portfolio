@@ -22,7 +22,10 @@ try {
         ->withPhpSets()
         ->withAttributesSets()
         ->withDeadCodeLevel(1)
-        ->withPreparedSets(typeDeclarations: true)
+        ->withPreparedSets(
+            earlyReturn: true,
+            strictBooleans: true
+        )
         ->withCodeQualityLevel(1)
         ->withConfiguredRule(DisallowedEmptyRuleFixerRector::class, [
             'treat_as_non_empty' => false,
